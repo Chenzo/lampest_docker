@@ -26,7 +26,7 @@ if (mysqli_connect_errno()) {
 
 
 
-CHECKING DB!!!
+CHECKING DB!!!<br/><br/>
 
 
 
@@ -53,8 +53,7 @@ function getTestData() {
 $gotData = getTestData();
 
 foreach ($gotData as $oneData) {
-    echo "VINCE VINCE";
-    echo $oneData['Thing'];
+    echo $oneData['FT_Guid'] . " - <strong>" . $oneData['Thing'] . "</strong>:" . $oneData['Another_Thing'] . "<br/>";
 }
 
 ?>
