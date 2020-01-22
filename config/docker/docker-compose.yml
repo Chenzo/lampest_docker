@@ -9,21 +9,22 @@ services:
             - 80:80
         volumes:
             - ../../www:/var/www/html
+            - ../php/php.ini:/usr/local/etc/php/php.ini
         links:
             - 'database'
         environment:
             SITE_URL: http://localhost
             TZ: America/New_York
             SQL_HOSTNAME: database
-            SQL_DATABASE: TbiMisc
+            SQL_DATABASE: TestDB
             SQL_USERNAME: root
             SQL_PASSWORD: password
     
     database:
-        image: mariadb:10.1
+        image: mariadb:latest
         volumes:
             #- ../mariadb:/var/lib/mysql
-            - ../database/TbiMisc.sql:/docker-entrypoint-initdb.d/TbiMisc.sql
+            - ../database/TestDB.sql:/docker-entrypoint-initdb.d/TestDB.sql
         environment:
             TZ: America/New_York
             MYSQL_ALLOW_EMPTY_PASSWORD: "no"
@@ -32,6 +33,16 @@ services:
             #MYSQL_USER: 'testuser'
             #MYSQL_PASSWORD: 'testpassword'
             #MYSQL_DATABASE: 'testdb'
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        ports:
+            - "3307:80"
+        links:
+            - database
+        environment:
+            PMA_HOST: database
+            PMA_PORT: 3306
 
 #volumes:
 #    mariadb:
