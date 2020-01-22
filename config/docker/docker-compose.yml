@@ -1,0 +1,37 @@
+version: '3'
+services:
+    php-apache:
+        #image: php:7.2.1-apache
+        build:
+            context: ../../
+            dockerfile: config/docker/Dockerfile
+        ports:
+            - 80:80
+        volumes:
+            - ../../www:/var/www/html
+        links:
+            - 'database'
+        environment:
+            SITE_URL: http://localhost
+            TZ: America/New_York
+            SQL_HOSTNAME: database
+            SQL_DATABASE: TbiMisc
+            SQL_USERNAME: root
+            SQL_PASSWORD: password
+    
+    database:
+        image: mariadb:10.1
+        volumes:
+            #- ../mariadb:/var/lib/mysql
+            - ../database/TbiMisc.sql:/docker-entrypoint-initdb.d/TbiMisc.sql
+        environment:
+            TZ: America/New_York
+            MYSQL_ALLOW_EMPTY_PASSWORD: "no"
+            MYSQL_ROOT_PASSWORD: password
+            #MYSQL_ROOT_PASSWORD: "rootpwd"
+            #MYSQL_USER: 'testuser'
+            #MYSQL_PASSWORD: 'testpassword'
+            #MYSQL_DATABASE: 'testdb'
+
+#volumes:
+#    mariadb:
