@@ -25,3 +25,4 @@ pw: password
 `/config/database/TestDB.sql` - is the SQL script that populates the empty DB.
 
 
+Composer is installed on the image. But not used in this example. You'd need to remote into the container and `compose init`
